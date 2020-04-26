@@ -16,17 +16,15 @@ column1 = dbc.Col(
         dcc.Markdown(
             """
         
-            ## Your Value Proposition
+            ## How are you likely to rate a hotel, based on your tripadvisor stats.
 
-            Emphasize how the app will benefit users. Don't emphasize the underlying technology.
-
-            ✅ RUN is a running app that adapts to your fitness levels and designs personalized workouts to help you improve your running.
-
-            ❌ RUN is the only intelligent running app that uses sophisticated deep neural net machine learning to make your run smarter because we believe in ML driven workouts.
+            Have you ever been on tripadvisor, looking at hotels that you've never been to before and trying to decide
+            whether to give them a try or not? The idea behind this app is to help users get a better idea of whether 
+            they would like a paticular hotel or not. 
 
             """
         ),
-        dcc.Link(dbc.Button('Your Call To Action', color='primary'), href='/predictions')
+        dcc.Link(dbc.Button('Make some predictions', color='primary'), href='/predictions')
     ],
     md=4,
 )
