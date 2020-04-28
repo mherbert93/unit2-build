@@ -22,7 +22,9 @@ column1 = dbc.Col(
             Tripadvisor reviews of 21 different hotels located on the Las Vegas strip. This app uses 3 different models, 
             combined into a voting ensemble via sklearn's votingclassifier. It is comprised of a random forest, xgboost, 
             and logistic regression model. The voting classifier uses a soft voting option which predicts the class label 
-            based on the argmax of the sums of the predicted probabilities. 
+            based on the argmax of the sums of the predicted probabilities. It is also weighted 2(random forest), 1(logistic
+            regression), and 2(xgboost). The reason for this being my logistic regression model overall performs 
+            worse than the other two, but also is stronger in some areas so it is worth keeping in our ensemble.
 
             """
             
@@ -36,9 +38,35 @@ column1 = dbc.Col(
              
             In addition to that, I also am grouping the country of the reviewer into "USA", "Canada", "UK", and "Other".
             Some of the data on the properties was also not correct. There were multiple hotels flagged as having a casino
-            that actually do not have a casino and so I changed these as well.
+            that actually do not have a casino and so I changed these as well. Due to the extreme class imbalance 
+            I occurred(8% of reviews were bad, which was only 33 observations! Not much data to work with here), we had
+            to treat this data in some way. I decided to randomly oversample all but the majority class. 
+            
+            For the random forest and xgboost models, I used an ordinal encoder prior to fitting the model. For the
+            logistic regression model, I applied one hot encoding, followed by a standard scalar and then selectkbest
+            to determine the optimal number of features.
+            """
+            
+            """
+            ## Performance of the model
+            
+            The baseline accuracy for my model is 46.5% on the test dataset. This is the accuracy we would get if we 
+            chose the majority class each time. Our model is able to achieve 56.4% accuracy on the test dataset. However,
+            accuracy does not tell the whole story due to the imbalanced classes. Instead, accuracy measures like precision,
+            recall, and roc auc are more applicable here. 
+            """
+        ),
+        html.Img(src='assets/accuracy.PNG', className='img-fluid'),
+        dcc.Markdown(
+
+            """
+            Overall, considering the very small dataset(~500 observations), and imbalanced classes, I am satisfied with
+            the model results. The model beats the baseline, while still also being able to correctly classify some of
+            the minority class. For this app to be useful for real world use, I believe that we would need more data. We
+            would need a larger sample size as well as more predictive features. 
             """
         )
+
     ],
 )
 
