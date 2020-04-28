@@ -13,12 +13,7 @@ from app import app
 column1 = dbc.Col(
     [
         dcc.Markdown(
-            """
-        
-            ## Insights
-
-
-            """
+            "Test"
         ),
 
     ],

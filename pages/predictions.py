@@ -22,7 +22,7 @@ import pandas as pd
 #                                                       ['YES'], ['NO'], ['YES'],
 #                                                       ['YES'], ['YES']])
 
-#define hotel features here rather than have the user input them.
+#define hotel features here rather than have the user input them. Definately not prod ready/best practice to do it this way!
 hotels = {'The Cosmopolitan Las Vegas': {'Hotel stars': 5, 'Nr. rooms': 2959, 'Pool': 'YES', 'Gym': 'YES',
                                          'Tennis court': 'NO', 'Spa': 'YES', 'Casino': 'YES', 'Free internet': 'YES'},
 
