@@ -22,5 +22,17 @@ column1 = dbc.Col(
 
     ],
 )
+column2 = dbc.Col(
+    [
+        dcc.Markdown(
+            """
+            ## asdas
+
+            What can we learn from this model?
+            """
+        ),
+
+    ],
+)
 
 layout = dbc.Row([column1])

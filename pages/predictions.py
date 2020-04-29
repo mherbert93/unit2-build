@@ -238,7 +238,7 @@ column1 = dbc.Col(
             options=[
                 {'label': 'The Cosmopolitan Las Vegas', 'value': 'The Cosmopolitan Las Vegas'},
                 {'label': 'Paris Las Vegas', 'value': 'Paris Las Vegas'},
-                {'label': 'Tuscany Las Vegas Suites & Casino', 'value': 'Tropicana Las Vegas - A Double Tree by Hilton Hotel'},
+                {'label': 'Tuscany Las Vegas Suites & Casino', 'value': 'Tuscany Las Vegas Suites & Casino'},
                 {'label': 'Tropicana Las Vegas - A Double Tree by Hilton Hotel', 'value': 'Tropicana Las Vegas - A Double Tree by Hilton Hotel'},
                 {'label': 'Hilton Grand Vacations on the Boulevard', 'value': 'Hilton Grand Vacations on the Boulevard'},
                 {'label': 'The Westin las Vegas Hotel Casino & Spa', 'value': 'The Westin las Vegas Hotel Casino & Spa'},
@@ -268,7 +268,7 @@ column1 = dbc.Col(
 
 column2 = dbc.Col(
     [
-        html.H2('Your rating of this hotel', className='mb-5'),
+        html.H2('Your rating of this hotel:', className='mb-5'),
         html.Div(id='prediction-content', className='lead')
     ]
 )
