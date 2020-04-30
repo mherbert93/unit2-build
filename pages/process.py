@@ -63,7 +63,9 @@ column1 = dbc.Col(
             Overall, considering the tiny dataset(~500 observations), and imbalanced classes, I am satisfied with
             the model results. The model beats the baseline, while still also being able to correctly classify some of
             the minority class. For this app to be useful for real world use, I believe that it would need more data. It
-            would need a larger sample size and more predictive features. 
+            would need a larger sample size and more predictive features. Additionally, to be used as a tool to suggest
+            hotels people try, we would need different features(removing some features tied to specific reviews, and adding
+            more generalized features).
             """
         )
 

@@ -105,15 +105,6 @@ hotels = {'The Cosmopolitan Las Vegas': {'Hotel stars': 5, 'Nr. rooms': 2959, 'P
           }
 
 
-#data = []
-
-# hotels = pd.DataFrame(data, index=['The Cosmopolitan Las Vegas'])
-#
-# #hotels_test = pd.DataFrame(data=hotels)
-# hotel = hotels.loc["The Cosmopolitan Las Vegas", "Hotel stars"]
-#
-# print(hotel)
-
 dcc.Input(
     id='hotels_dictionary',
     placeholder='Enter a value...',
@@ -126,6 +117,38 @@ dcc.Input(
 column1 = dbc.Col(
     [
         dcc.Markdown('## Predictions', className='mb-5'),
+        dcc.Markdown('#### Which hotel would you be staying at?'),
+        dcc.Dropdown(
+            id='hotel_name',
+            options=[
+                {'label': 'The Cosmopolitan Las Vegas', 'value': 'The Cosmopolitan Las Vegas'},
+                {'label': 'Paris Las Vegas', 'value': 'Paris Las Vegas'},
+                {'label': 'Tuscany Las Vegas Suites & Casino', 'value': 'Tuscany Las Vegas Suites & Casino'},
+                {'label': 'Tropicana Las Vegas - A Double Tree by Hilton Hotel',
+                 'value': 'Tropicana Las Vegas - A Double Tree by Hilton Hotel'},
+                {'label': 'Hilton Grand Vacations on the Boulevard',
+                 'value': 'Hilton Grand Vacations on the Boulevard'},
+                {'label': 'The Westin las Vegas Hotel Casino & Spa',
+                 'value': 'The Westin las Vegas Hotel Casino & Spa'},
+                {'label': "Marriott's Grand Chateau", 'value': "Marriott's Grand Chateau"},
+                {'label': "Wyndham Grand Desert", 'value': "Wyndham Grand Desert"},
+                {'label': "Monte Carlo Resort&Casino", 'value': "Monte Carlo Resort&Casino"},
+                {'label': "Caesars Palace", 'value': "Caesars Palace"},
+                {'label': "The Cromwell", 'value': "The Cromwell"},
+                {'label': "Hilton Grand Vacations at the Flamingo", 'value': "Hilton Grand Vacations at the Flamingo"},
+                {'label': "Wynn Las Vegas", 'value': "Wynn Las Vegas"},
+                {'label': "Encore at wynn Las Vegas", 'value': "Encore at wynn Las Vegas"},
+                {'label': "The Venetian Las Vegas Hotel", 'value': "The Venetian Las Vegas Hotel"},
+                {'label': "Bellagio Las Vegas", 'value': "Bellagio Las Vegas"},
+                {'label': "Trump International Hotel Las Vegas", 'value': "Trump International Hotel Las Vegas"},
+                {'label': "The Palazzo Resort Hotel Casino", 'value': "The Palazzo Resort Hotel Casino"},
+                {'label': "Excalibur Hotel & Casino", 'value': "Excalibur Hotel & Casino"},
+                {'label': "Treasure Island- TI Hotel & Casino", 'value': "Treasure Island- TI Hotel & Casino"},
+                {'label': "Circus Circus Hotel & Casino Las Vegas", 'value': "Circus Circus Hotel & Casino Las Vegas"},
+            ],
+            value='The Cosmopolitan Las Vegas',
+            className='mb-10',
+        ),
         dcc.Markdown('#### How many total reviews have you left on Tripadvisor?'),
         dcc.Input(
             id='total_reviews',
@@ -140,7 +163,7 @@ column1 = dbc.Col(
             placeholder='Enter a value...',
             type='number',
             value=1,
-            min=0
+            min=1
         ),
         dcc.Markdown('#### How many helpful votes have you left on Tripadvisor?'),
         dcc.Input(
@@ -236,48 +259,14 @@ column1 = dbc.Col(
             value=datetime.now().strftime("%A"),  # Get current day name
             className='mb-3',
         ),
-        dcc.Markdown('#### Which hotel would you be staying at?'),
-        dcc.Dropdown(
-            id='hotel_name',
-            options=[
-                {'label': 'The Cosmopolitan Las Vegas', 'value': 'The Cosmopolitan Las Vegas'},
-                {'label': 'Paris Las Vegas', 'value': 'Paris Las Vegas'},
-                {'label': 'Tuscany Las Vegas Suites & Casino', 'value': 'Tuscany Las Vegas Suites & Casino'},
-                {'label': 'Tropicana Las Vegas - A Double Tree by Hilton Hotel', 'value': 'Tropicana Las Vegas - A Double Tree by Hilton Hotel'},
-                {'label': 'Hilton Grand Vacations on the Boulevard', 'value': 'Hilton Grand Vacations on the Boulevard'},
-                {'label': 'The Westin las Vegas Hotel Casino & Spa', 'value': 'The Westin las Vegas Hotel Casino & Spa'},
-                {'label': "Marriott's Grand Chateau", 'value': "Marriott's Grand Chateau"},
-                {'label': "Wyndham Grand Desert", 'value': "Wyndham Grand Desert"},
-                {'label': "Monte Carlo Resort&Casino", 'value': "Monte Carlo Resort&Casino"},
-                {'label': "Caesars Palace", 'value': "Caesars Palace"},
-                {'label': "The Cromwell", 'value': "The Cromwell"},
-                {'label': "Hilton Grand Vacations at the Flamingo", 'value': "Hilton Grand Vacations at the Flamingo"},
-                {'label': "Wynn Las Vegas", 'value': "Wynn Las Vegas"},
-                {'label': "Encore at wynn Las Vegas", 'value': "Encore at wynn Las Vegas"},
-                {'label': "The Venetian Las Vegas Hotel", 'value': "The Venetian Las Vegas Hotel"},
-                {'label': "Bellagio Las Vegas", 'value': "Bellagio Las Vegas"},
-                {'label': "Trump International Hotel Las Vegas", 'value': "Trump International Hotel Las Vegas"},
-                {'label': "The Palazzo Resort Hotel Casino", 'value': "The Palazzo Resort Hotel Casino"},
-                {'label': "Excalibur Hotel & Casino", 'value': "Excalibur Hotel & Casino"},
-                {'label': "Treasure Island- TI Hotel & Casino", 'value': "Treasure Island- TI Hotel & Casino"},
-                {'label': "Circus Circus Hotel & Casino Las Vegas", 'value': "Circus Circus Hotel & Casino Las Vegas"},
-            ],
-            value='The Cosmopolitan Las Vegas',
-            className='mb-10',
-        ),
     ],
     md=4,
 )
-
-#fig = px.bar(pred_prob, x='Rating', y='Probability')
 
 column2 = dbc.Col(
     [
         html.H2(id='selected_hotel', className='mb-5'),
         html.Div(id='prediction-content', className='lead', style={'textAlign': 'center', 'fontSize': 80}),
-        #html.H2('The predicted probabilties are:', className='mb-5'),
-        #html.Div(id='pred_prob', className='lead')
-        #html.H2('Probabilities:', className='mb-5'),
         html.Div(id='pred_graph'),
     ],
 )
@@ -314,7 +303,8 @@ def predict(total_reviews, total_hotel_reviews, helpful_votes, country, quarter,
     y_pred = pipeline.predict(df)[0]
     y_prob_pred = pipeline.predict_proba(df)[0]
 
-    df_prob = pd.DataFrame({'Classes': ['Average', 'Bad', 'Excellent'], 'Probabilities': y_prob_pred})
+    df_prob = pd.DataFrame({'Classes': ['Bad', 'Average', 'Excellent'], 'Probabilities': [y_prob_pred[1], y_prob_pred[0],
+                                                                                          y_prob_pred[2]]})
 
     hotel_text = "Your rating of " + hotel_name
 

@@ -71,6 +71,11 @@ column1 = dbc.Col(
             When adding in total reviews to our plot, it becomes much clearer that users who have only left 1 review
             is a significant portion of the probability of predicting the class. You can see that as hotel stars goes up,
             the probability does not change much. But as reviews goes up, it significantly changes the probability. 
+            
+            In conclusion, I gained some insight about how people rate hotels that I did not know before. For bad reviews, 
+            it seems that it has more to do with the particular data around the reviewer and less about the characteristics 
+            of the hotel. The main driver between an average review and an excellent review however does seem to be the 
+            quality of the hotel(hotel stars). This is not surprising, but still is interesting to see these interactions.
             """
         )
 
