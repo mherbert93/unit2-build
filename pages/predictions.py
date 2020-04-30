@@ -131,21 +131,24 @@ column1 = dbc.Col(
             id='total_reviews',
             placeholder='Enter a value...',
             type='number',
-            value=1
+            value=1,
+            min=1
         ),
         dcc.Markdown('#### How many hotel reviews have you left on Tripadvisor?'),
         dcc.Input(
             id='total_hotel_reviews',
             placeholder='Enter a value...',
             type='number',
-            value=1
+            value=1,
+            min=0
         ),
         dcc.Markdown('#### How many helpful votes have you left on Tripadvisor?'),
         dcc.Input(
             id='helpful_votes',
             placeholder='Enter a value...',
             type='number',
-            value=1
+            value=0,
+            min=0
         ),
         dcc.Markdown('#### Which continent are you located on?'),
         dcc.Dropdown(
@@ -270,8 +273,8 @@ column1 = dbc.Col(
 
 column2 = dbc.Col(
     [
-        html.H2('Your rating of this hotel:', className='mb-5'),
-        html.Div(id='prediction-content', className='lead'),
+        html.H2(id='selected_hotel', className='mb-5'),
+        html.Div(id='prediction-content', className='lead', style={'textAlign': 'center', 'fontSize': 80}),
         #html.H2('The predicted probabilties are:', className='mb-5'),
         #html.Div(id='pred_prob', className='lead')
         #html.H2('Probabilities:', className='mb-5'),
@@ -284,6 +287,7 @@ layout = dbc.Row([column1, column2])
 
 @app.callback(
     [Output('prediction-content', 'children'),
+     Output('selected_hotel', 'children'),
      Output('pred_graph', 'children')],
     [Input('total_reviews', 'value'), Input('total_hotel_reviews', 'value'), Input('helpful_votes', 'value'),
      Input('country', 'value'), Input('quarter', 'value'), Input('traveler_type', 'value'), Input('hotel_name', 'value'),
@@ -312,7 +316,9 @@ def predict(total_reviews, total_hotel_reviews, helpful_votes, country, quarter,
 
     df_prob = pd.DataFrame({'Classes': ['Average', 'Bad', 'Excellent'], 'Probabilities': y_prob_pred})
 
-    return y_pred, html.Div(
+    hotel_text = "Your rating of " + hotel_name
+
+    return y_pred, hotel_text, html.Div(
             dcc.Graph(
                 id='bar chart',
                 figure={
@@ -326,7 +332,7 @@ def predict(total_reviews, total_hotel_reviews, helpful_votes, country, quarter,
                     "layout": {
                         'title': 'Probability Distribution',
                         "xaxis": {"title": "Ratings"},
-                        "yaxis": {"title": "Probability %"}
+                        "yaxis": {"title": "Probability"}
                     },
                 },
             )

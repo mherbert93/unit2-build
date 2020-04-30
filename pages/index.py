@@ -18,9 +18,9 @@ column1 = dbc.Col(
         
             ## How are you likely to rate a hotel, based on your tripadvisor stats.
 
-            Have you ever been on tripadvisor, looking at hotels that you've never been to before and trying to decide
-            whether to give them a try or not? The idea behind this app is to help users get a better idea of whether 
-            they would like a paticular hotel or not. 
+            Have you ever been on TripAdvisor, looking at hotels you've never been to before and trying to decide whether 
+            to give them a try? The idea behind this app is to help users get a better idea of whether they would like 
+            a particular hotel. 
 
             """
         ),

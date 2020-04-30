@@ -20,7 +20,7 @@ navbar = dbc.NavbarSimple(
     ],
     sticky='top',
     color='light',
-    light=True, 
+    light=True,
     dark=False
 )
 
