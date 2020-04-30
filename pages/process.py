@@ -39,7 +39,7 @@ column1 = dbc.Col(
             In addition to that, I also am grouping the country of the reviewer into "USA", "Canada", "UK", and "Other".
             Some of the data on the properties was also not correct. There were multiple hotels flagged as having a casino
             that actually do not have a casino and so I changed these as well. Due to the extreme class imbalance 
-            I occurred(8% of reviews were bad, which was only 33 observations! Not much data to work with here), we had
+            I occurred(8% of reviews were bad, which was only 33 observations! Not much data to work with here), I had
             to treat this data in some way. I decided to randomly oversample all but the majority class. 
             
             For the random forest and xgboost models, I used an ordinal encoder prior to fitting the model. For the
@@ -50,7 +50,7 @@ column1 = dbc.Col(
             """
             ## Performance of the model
             
-            The baseline accuracy for my model is 46.5% on the test dataset. This is the accuracy we would get if we 
+            The baseline accuracy for my model is 46.5% on the test dataset. This is the accuracy I would get if I 
             chose the majority class each time. Our model is able to achieve 56.4% accuracy on the test dataset. However,
             accuracy does not tell the whole story due to the imbalanced classes. Instead, accuracy measures like precision,
             recall, and roc auc are more applicable here. 
@@ -62,7 +62,7 @@ column1 = dbc.Col(
             """
             Overall, considering the very small dataset(~500 observations), and imbalanced classes, I am satisfied with
             the model results. The model beats the baseline, while still also being able to correctly classify some of
-            the minority class. For this app to be useful for real world use, I believe that we would need more data. We
+            the minority class. For this app to be useful for real world use, I believe that it would need more data. It
             would need a larger sample size as well as more predictive features. 
             """
         )

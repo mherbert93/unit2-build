@@ -5,6 +5,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 from datetime import datetime
+import plotly.express as px
 
 # Imports from this application
 from app import app
@@ -265,19 +266,25 @@ column1 = dbc.Col(
     md=4,
 )
 
+#fig = px.bar(pred_prob, x='Rating', y='Probability')
 
 column2 = dbc.Col(
     [
         html.H2('Your rating of this hotel:', className='mb-5'),
-        html.Div(id='prediction-content', className='lead')
-    ]
+        html.Div(id='prediction-content', className='lead'),
+        #html.H2('The predicted probabilties are:', className='mb-5'),
+        #html.Div(id='pred_prob', className='lead')
+        #html.H2('Probabilities:', className='mb-5'),
+        html.Div(id='pred_graph'),
+    ],
 )
 
 layout = dbc.Row([column1, column2])
 
 
 @app.callback(
-    Output('prediction-content', 'children'),
+    [Output('prediction-content', 'children'),
+     Output('pred_graph', 'children')],
     [Input('total_reviews', 'value'), Input('total_hotel_reviews', 'value'), Input('helpful_votes', 'value'),
      Input('country', 'value'), Input('quarter', 'value'), Input('traveler_type', 'value'), Input('hotel_name', 'value'),
      Input('continent', 'value'), Input('month', 'value'), Input('day', 'value')],
@@ -301,4 +308,26 @@ def predict(total_reviews, total_hotel_reviews, helpful_votes, country, quarter,
 
     )
     y_pred = pipeline.predict(df)[0]
-    return y_pred
+    y_prob_pred = pipeline.predict_proba(df)[0]
+
+    df_prob = pd.DataFrame({'Classes': ['Average', 'Bad', 'Excellent'], 'Probabilities': y_prob_pred})
+
+    return y_pred, html.Div(
+            dcc.Graph(
+                id='bar chart',
+                figure={
+                    "data": [
+                        {
+                            "x": df_prob['Classes'],
+                            "y": df_prob['Probabilities'],
+                            "type": "bar",
+                        }
+                    ],
+                    "layout": {
+                        'title': 'Probability Distribution',
+                        "xaxis": {"title": "Ratings"},
+                        "yaxis": {"title": "Probability %"}
+                    },
+                },
+            )
+    )
